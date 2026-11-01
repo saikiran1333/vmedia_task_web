@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import { describe, test } from "node:test";
-import { ApiError, describeFailure } from "../src/core/errors/api-error.ts";
-import { debugLog } from "../src/core/logging/debug-log.ts";
-import { getHealth } from "../src/features/health/application/get-health.ts";
-import type { HealthSnapshot } from "../src/features/health/domain/entities/health.ts";
-import { getHello } from "../src/features/hello/application/get-hello.ts";
-import type { Hello } from "../src/features/hello/domain/entities/hello.ts";
+import { ApiError, describeFailure } from "../src/core/errors/api-error";
+import { debugLog } from "../src/core/logging/debug-log";
+import { getHealth } from "../src/features/health/application/get-health";
+import type { HealthSnapshot } from "../src/features/health/domain/entities/health";
+import { getHello } from "../src/features/hello/application/get-hello";
+import type { Hello } from "../src/features/hello/domain/entities/hello";
 
 const hello: Hello = {
   greeting: "Hello from Vmedia Enterprise Backend!",
@@ -95,19 +95,20 @@ describe("debug log", () => {
       lines.push(String(line));
     };
     const previous = process.env.NODE_ENV;
+    const env = process.env as Record<string, string | undefined>;
     try {
-      process.env.NODE_ENV = "development";
+      env.NODE_ENV = "development";
       debugLog("hello", "ready", { platform: "Vmedia", password: "hidden", database_url: "hidden" });
       assert.match(lines[0], /\[web\] \[hello\] ready/);
       assert.match(lines[0], /\[redacted\]/);
       assert.doesNotMatch(lines[0], /hidden/);
 
-      process.env.NODE_ENV = "production";
+      env.NODE_ENV = "production";
       debugLog("hello", "should not print");
       assert.equal(lines.length, 1);
     } finally {
       console.debug = original;
-      process.env.NODE_ENV = previous;
+      env.NODE_ENV = previous;
     }
   });
 });

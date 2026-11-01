@@ -1,14 +1,21 @@
 export type ApiErrorKind = "network" | "timeout" | "http" | "parse";
 
+export type FieldError = {
+  field: string;
+  message: string;
+};
+
 export class ApiError extends Error {
   readonly kind: ApiErrorKind;
   readonly statusCode?: number;
+  readonly fieldErrors: FieldError[];
 
-  constructor(message: string, kind: ApiErrorKind, statusCode?: number) {
+  constructor(message: string, kind: ApiErrorKind, statusCode?: number, fieldErrors: FieldError[] = []) {
     super(message);
     this.name = "ApiError";
     this.kind = kind;
     this.statusCode = statusCode;
+    this.fieldErrors = fieldErrors;
   }
 }
 

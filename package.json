@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "tsx --test tests/**/*.test.ts"
+    "test": "tsx --test tests/**/*.test.ts",
+    "lint": "tsc --noEmit --pretty false"
   },
   "dependencies": {
     "next": "^15.5.6",
