@@ -6,8 +6,8 @@ export const contact = {
   phoneDisplay: "+91 8008 200 794",
   phoneTel: "+918008200794",
   phoneHours: "Monday to Friday, 9:30 AM – 6:00 PM",
-  whatsappDisplay: "+91 9063 09 9063",
-  whatsappDigits: "919063099063",
+  whatsappDisplay: "+91 91216 26812",
+  whatsappDigits: "919121626812",
   officeHours: "Monday to Saturday, 11:00 AM – 6:00 PM. Second Saturday and Sunday closed.",
   addressLines: [
     "The Tribe Green",
