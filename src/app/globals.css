@@ -191,6 +191,38 @@ main.system-main,
   margin: 0 auto;
 }
 
+.tg-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.tg-login-card {
+  width: min(440px, 100%);
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+}
+
+.tg-login-logo {
+  height: 52px;
+  width: auto;
+}
+
+.tg-login-form {
+  width: 100%;
+  padding: 28px 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.tg-login-form h1 {
+  margin: 0;
+  text-align: center;
+}
+
 .tg-topbar {
   background: var(--tg-text);
   color: white;

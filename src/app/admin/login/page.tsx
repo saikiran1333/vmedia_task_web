@@ -12,9 +12,9 @@ export default async function LoginPage({
   const nextPath = safeNextPath(typeof params.next === "string" ? params.next : "/admin");
   const reason = typeof params.reason === "string" ? params.reason : "";
   return (
-    <div className="tg-site">
-      <div className="tg-wrap tg-section">
-        <img src="/assets/logo/tribegreen-logo.png" alt="TribeGreen" style={{ height: 48 }} />
+    <div className="tg-site tg-login-page">
+      <div className="tg-login-card">
+        <img src="/assets/logo/tribegreen-logo.png" alt="TribeGreen" className="tg-login-logo" />
         <LoginForm nextPath={nextPath} reason={reason} />
       </div>
     </div>

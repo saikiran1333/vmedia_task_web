@@ -63,6 +63,18 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
       signal: controller.signal,
       headers,
       body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+    }).catch(async (error: unknown) => {
+      const code = error instanceof Error && "cause" in error ? String((error.cause as { code?: string } | undefined)?.code ?? "") : "";
+      if (code !== "ECONNREFUSED" && code !== "ECONNRESET" && code !== "ENOTFOUND") throw error;
+      debugLog("http", "retry after connection failure", { path, code });
+      await new Promise((resolve) => setTimeout(resolve, 250));
+      return fetch(url, {
+        method,
+        cache: "no-store",
+        signal: controller.signal,
+        headers,
+        body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+      });
     });
 
     const body = (await parseJson(response, path)) as Envelope<T> | null;
@@ -84,10 +96,12 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
       debugLog("http", "timeout", { path, timeoutMs });
       throw new ApiError("The backend did not respond within 8 seconds.", "timeout");
     }
-    debugLog("http", "network failure", { path });
+    const code = error instanceof Error && "cause" in error ? String((error.cause as { code?: string } | undefined)?.code ?? error.message) : "unknown";
+    debugLog("http", "network failure", { path, code });
     throw new ApiError(
       "The backend could not be reached. Start it on port 5000 and try again.",
       "network",
+      503,
     );
   } finally {
     clearTimeout(timeout);

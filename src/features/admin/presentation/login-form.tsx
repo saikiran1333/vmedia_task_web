@@ -37,7 +37,7 @@ export function LoginForm({ nextPath, reason }: { nextPath: string; reason: stri
   }
 
   return (
-    <form onSubmit={onSubmit} className="tg-panel" style={{ padding: 16, display: "grid", gap: 16, maxWidth: 480 }}>
+    <form onSubmit={onSubmit} className="tg-panel tg-login-form">
       <h1 className="tg-display">Admin sign in</h1>
       {reason === "expired" ? <p className="tg-muted">Your session ended. Sign in again.</p> : null}
       {error ? (
